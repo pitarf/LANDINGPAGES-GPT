@@ -12,5 +12,5 @@ export const site = {
   since: "MODELO DEMONSTRATIVO",
   hours: "HORÁRIOS A DEFINIR",
   whatsappUrl: whatsappNumber ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}` : "#contato",
-  instagramUrl: "https://instagram.com" // Replace with the client's official profile.
+  instagramUrl: "" // Add the client's verified Instagram URL before publishing.
 } as const;
