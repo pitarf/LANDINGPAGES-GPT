@@ -20,6 +20,13 @@ export default function Home() {
   const root = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, []);
+  useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let cleanup = () => {};
@@ -88,7 +95,7 @@ export default function Home() {
     <section className="services reveal-zone" id="tratamentos"><div className="section-head reveal"><div><p className="eyebrow"><span/> CUIDADO SOB MEDIDA</p><h2>Seu momento de <em>florescer.</em></h2></div><p className="section-note">Cada pele tem uma história.<br/>Cada cuidado, um propósito.</p></div><div className="service-grid">{services.map((s)=><article className="service-card reveal" key={s.n}><span className="service-number">{s.n}</span><div><span className="service-tag">{s.tag}</span><h3>{s.title}</h3><p>{s.desc}</p><a href="#contato" aria-label={"Saiba mais sobre "+s.title}><ArrowUpRight/></a></div></article>)}</div></section>
     <section className="editorial reveal-zone" id="espaco"><div className="editorial-image reveal" style={{backgroundImage:"url("+photos.face+")"}}/><div className="editorial-copy reveal"><p className="eyebrow"><span/> O ESPAÇO {site.name}</p><h2>Um lugar para <em>desacelerar.</em></h2><p>Da recepção ao último cuidado, cada detalhe foi pensado para que você se sinta acolhida. Um ambiente sereno, profissionais que escutam e uma experiência que começa muito antes do tratamento.</p><a className="text-link" href="#contato">Venha conhecer <ArrowRight size={16}/></a></div><div className="editorial-small reveal" style={{backgroundImage:"url("+photos.room+")"}}/><div className="editorial-caption">UM REFÚGIO NO MEIO DA CIDADE</div></section>
     <section className="quote-section"><Sparkles size={20}/><p>“O autocuidado não é um luxo.<br/>É a forma como você diz <em>eu importo.</em>”</p><span>{site.name} · NOSSA ESSÊNCIA</span></section>
-    <section className="contact reveal-zone" id="contato"><div className="contact-image" style={{backgroundImage:"url("+photos.detail+")"}}/><div className="contact-copy reveal"><p className="eyebrow"><span/> SEU PRÓXIMO CAPÍTULO COMEÇA AQUI</p><h2>Vamos cuidar<br/>de <em>você?</em></h2><p>Conte para nós o que você procura. Nossa equipe vai ajudar a encontrar o cuidado ideal para o seu momento.</p><a className="button button-dark" href={site.whatsappUrl} target="_blank" rel="noreferrer">Agendar pelo WhatsApp <ArrowUpRight size={17}/></a><div className="contact-meta"><span>{site.hours}</span><span>{site.city}</span></div></div></section>
-    <footer><a className="brand footer-brand" href="#"><span className="brand-mark">m.</span><span>{site.name}<small>{site.descriptor}</small></span></a><p>Beleza com intenção. Cuidado com presença.</p><a className="social" href={site.instagramUrl} target="_blank" rel="noreferrer"><Instagram size={17}/> INSTAGRAM</a><small>© {new Date().getFullYear()} {site.name}. TODOS OS DIREITOS RESERVADOS.</small></footer>
+    <section className="contact reveal-zone" id="contato"><div className="contact-image" style={{backgroundImage:"url("+photos.detail+")"}}/><div className="contact-copy reveal"><p className="eyebrow"><span/> SEU PRÓXIMO CAPÍTULO COMEÇA AQUI</p><h2>Vamos cuidar<br/>de <em>você?</em></h2><p>Conte para nós o que você procura. Nossa equipe vai ajudar a encontrar o cuidado ideal para o seu momento.</p><a className="button button-dark" href={site.whatsappUrl} target={site.whatsappUrl.startsWith("https://") ? "_blank" : undefined} rel="noreferrer">Personalizar agendamento <ArrowUpRight size={17}/></a><div className="contact-meta"><span>{site.hours}</span><span>{site.city}</span></div></div></section>
+    <footer><a className="brand footer-brand" href="#"><span className="brand-mark">m.</span><span>{site.name}<small>{site.descriptor}</small></span></a><p>Beleza com intenção. Cuidado com presença.</p>{site.instagramUrl ? <a className="social" href={site.instagramUrl} target="_blank" rel="noreferrer"><Instagram size={17}/> INSTAGRAM</a> : <span className="social"><Instagram size={17}/> INSTAGRAM · CONFIGURAR PERFIL</span>}<small>© {new Date().getFullYear()} {site.name}. TODOS OS DIREITOS RESERVADOS.</small></footer>
   </main>;
 }
