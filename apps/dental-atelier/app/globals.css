@@ -19,3 +19,28 @@
 }
 @media(max-width:360px){.d-hero-copy h1{font-size:46px}.d-brand small{font-size:7px}.d-treatment-name{font-size:17px}.d-contact h2{font-size:40px}}
 @media(hover:none){.d-links a,.d-link{min-height:44px}}
+
+
+/* Mobile QA pass: prevent horizontal overflow and improve touch ergonomics. */
+html,body{max-width:100%;overflow-x:clip}
+button,a{-webkit-tap-highlight-color:transparent}
+@media(max-width:800px){
+ .d-nav{gap:12px}
+ .d-links a{display:flex;align-items:center;min-height:44px}
+ .d-menu{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px}
+ .d-hero-copy,.d-intro-title,.d-intro-text,.d-section-title,.d-treatment-name,.d-space-copy,.d-contact-copy{min-width:0}
+ .d-treatment-name,.d-treatment-body p,.d-intro h2,.d-section-title h2,.d-space h2,.d-contact h2{overflow-wrap:anywhere}
+ .d-treatment>button{min-height:68px}
+ .d-button{max-width:100%;line-height:1.5;text-align:center}
+}
+@media(max-width:380px){
+ .d-brand{max-width:calc(100% - 60px)}
+ .d-brand>span:last-child{min-width:0;line-height:1.35}
+ .d-hero-copy{padding-left:6vw;padding-right:6vw}
+ .d-hero-copy h1{font-size:clamp(43px,12vw,48px)}
+ .d-hero-desc{max-width:100%}
+ .d-treatment>button{grid-template-columns:30px minmax(0,1fr) 30px;gap:6px}
+ .d-treatment-name{font-size:16px}
+ .d-contact-meta{flex-direction:column;gap:10px}
+}
+@media(hover:none){.d-links a,.d-link{min-height:44px}.d-links a::after{display:none}}
