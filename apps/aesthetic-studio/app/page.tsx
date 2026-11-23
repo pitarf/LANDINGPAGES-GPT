@@ -71,9 +71,40 @@ export default function Home() {
               scrub: true
             }
           });
-        }, root);
 
-        cleanup = () => context.revert();
+          const hero = root.current?.querySelector<HTMLElement>(".hero");
+          const heroImage = hero?.querySelector<HTMLElement>(".hero-image");
+          const canTrackPointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+          if (hero && heroImage && canTrackPointer) {
+            const moveX = gsap.quickTo(heroImage, "x", { duration: 0.7, ease: "power3.out" });
+            const moveY = gsap.quickTo(heroImage, "y", { duration: 0.7, ease: "power3.out" });
+
+            const handlePointerMove = (event: PointerEvent) => {
+              const bounds = hero.getBoundingClientRect();
+              const offsetX = (event.clientX - bounds.left) / bounds.width - 0.5;
+              const offsetY = (event.clientY - bounds.top) / bounds.height - 0.5;
+              moveX(offsetX * -14);
+              moveY(offsetY * -10);
+            };
+
+            const resetPointer = () => {
+              moveX(0);
+              moveY(0);
+            };
+
+            hero.addEventListener("pointermove", handlePointerMove);
+            hero.addEventListener("pointerleave", resetPointer);
+            cleanup = () => {
+              hero.removeEventListener("pointermove", handlePointerMove);
+              hero.removeEventListener("pointerleave", resetPointer);
+              context.revert();
+            };
+          } else {
+            cleanup = () => context.revert();
+          }
+        }, root.current ?? undefined);
+
         ScrollTrigger.refresh();
       } catch (error) {
         console.error("Não foi possível iniciar as animações da página.", error);
