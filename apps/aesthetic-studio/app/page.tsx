@@ -20,20 +20,65 @@ export default function Home() {
   const root = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     let cleanup = () => {};
     let cancelled = false;
-    import("gsap").then(({ gsap }) => {
-      import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+
+    const setupAnimations = async () => {
+      try {
+        const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+          import("gsap"),
+          import("gsap/ScrollTrigger")
+        ]);
+
+        if (cancelled) return;
+
         gsap.registerPlugin(ScrollTrigger);
-        const ctx = gsap.context(() => {
-          gsap.fromTo(".reveal", { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: 1, stagger: .12, ease: "power3.out", scrollTrigger: { trigger: ".reveal-zone", start: "top 82%" } });
-          gsap.to(".hero-image", { yPercent: 12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+        const context = gsap.context(() => {
+          gsap.utils.toArray<HTMLElement>(".reveal").forEach((element) => {
+            gsap.fromTo(
+              element,
+              { y: 32, autoAlpha: 0 },
+              {
+                y: 0,
+                autoAlpha: 1,
+                duration: 0.85,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: element,
+                  start: "top 88%",
+                  once: true
+                }
+              }
+            );
+          });
+
+          gsap.to(".hero-image", {
+            yPercent: 12,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".hero",
+              start: "top top",
+              end: "bottom top",
+              scrub: true
+            }
+          });
         }, root);
-        if (cancelled) ctx.revert();
-        else cleanup = () => ctx.revert();
-      });
-    });
-    return () => { cancelled = true; cleanup(); };
+
+        cleanup = () => context.revert();
+        ScrollTrigger.refresh();
+      } catch (error) {
+        console.error("Não foi possível iniciar as animações da página.", error);
+      }
+    };
+
+    void setupAnimations();
+
+    return () => {
+      cancelled = true;
+      cleanup();
+    };
   }, []);
   return <main ref={root}>
     <a className="skip-link" href="#essencia">Pular para o conteúdo</a>
