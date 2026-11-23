@@ -112,3 +112,15 @@ footer>small{border-top:1px solid rgba(255,255,255,.14);padding-top:20px}
 @media(prefers-reduced-motion:reduce){
   .nav-links a::after,.service-card,.service-card a,.brand{transition:none}
 }
+
+/* Keep anchored sections clear of the sticky navigation. */
+html{scroll-padding-top:90px}
+#essencia,#tratamentos,#espaco,#contato{scroll-margin-top:90px}
+@media(max-width:800px){
+  html{scroll-padding-top:72px}
+  #essencia,#tratamentos,#espaco,#contato{scroll-margin-top:72px}
+}
+@media(max-width:600px){
+  html{scroll-padding-top:68px}
+  #essencia,#tratamentos,#espaco,#contato{scroll-margin-top:68px}
+}
