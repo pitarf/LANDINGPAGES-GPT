@@ -11,7 +11,8 @@ const treatments = [
 ];
 const images={hero:"https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=1800&q=90",portrait:"https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=1000&q=85",clinic:"https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=85",detail:"https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1000&q=85"};
 export default function Home(){
- const root=useRef<HTMLElement>(null);const [open,setOpen]=useState<number|null>(0);const [menu,setMenu]=useState(false);\n useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if(event.key==="Escape")setMenu(false)};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
+ const root=useRef<HTMLElement>(null);const [open,setOpen]=useState<number|null>(0);const [menu,setMenu]=useState(false);
+ useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if(event.key==="Escape")setMenu(false)};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
  useEffect(()=>{let revert=()=>{};let cancelled=false;import("gsap").then(({gsap})=>import("gsap/ScrollTrigger").then(({ScrollTrigger})=>{gsap.registerPlugin(ScrollTrigger);const ctx=gsap.context(()=>{gsap.fromTo(".rise",{y:42,opacity:0},{y:0,opacity:1,duration:.9,stagger:.1,ease:"power3.out",scrollTrigger:{trigger:".approach",start:"top 78%"}});gsap.to(".dental-hero-photo",{yPercent:10,ease:"none",scrollTrigger:{trigger:".dental-hero",start:"top top",end:"bottom top",scrub:true}})},root);if(cancelled)ctx.revert();else revert=()=>ctx.revert()}));return()=>{cancelled=true;revert()}},[]);
  return <main ref={root}>
  <a className="skip-link" href="#filosofia">Pular para o conteúdo</a>
