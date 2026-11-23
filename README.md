@@ -31,6 +31,14 @@ Os nomes, textos, imagens, horários, endereço, redes sociais e contatos usados
 
 Os serviços odontológicos devem ser revisados pelo responsável técnico e adequados às normas vigentes do conselho profissional. Não foram incluídos preços, promessas de resultado ou depoimentos fictícios.
 
+## Configuração rápida para cada cliente
+
+Em cada aplicação, edite `app/site.config.ts` para atualizar nome da marca, descrição, cidade, horário, telefone do WhatsApp e Instagram. Os CTAs e rodapés consomem essa configuração. O telefone deve conter apenas DDI + DDD + número, sem espaços ou símbolos. Revise também textos, serviços, imagens e metadados antes de publicar.
+
+## Verificação automatizada
+
+O GitHub Actions executa o build de cada aplicação separadamente em pushes para `main` e `feat/**`, e em pull requests para `main`. Consulte a aba Actions para acompanhar os resultados.
+
 ## Princípios de implementação
 
 - Identidades visuais diferentes, não apenas variações de cor.
