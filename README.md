@@ -1,19 +1,41 @@
 # Landingpages GPT
 
-Projetos de landing pages premium, independentes e preparados para personalização assistida por IA.
+Dois modelos premium de landing pages, independentes e preparados para personalização assistida por IA.
 
-## Projetos
+## Aplicações
 
-- **Aesthetic Studio**: landing page para clínica de estética.
-- **Dental Atelier**: landing page para clínica odontológica.
+| Projeto | Caminho | Direção visual |
+| --- | --- | --- |
+| Aesthetic Studio (Maison Aura) | \`apps/aesthetic-studio\` | Editorial, orgânico, tons naturais e tipografia serifada |
+| Dental Atelier (Atelier Oral) | \`apps/dental-atelier\` | Contemporâneo, clínico sofisticado, azul profundo e tipografia geométrica |
 
-## Diretrizes técnicas e visuais
+## Stack
 
-- Next.js, TypeScript e Tailwind CSS, conforme a arquitetura definida no desenvolvimento.
-- Direção de arte inspirada em referências de qualidade como Awwwards.
-- GSAP e ScrollTrigger para animações avançadas e experiências ligadas ao scroll.
-- Motion para microinterações e transições de interface.
-- Design responsivo, acessível e otimizado para desempenho e conversão.
-- Conteúdo e identidade visual estruturados para facilitar futuras personalizações.
+Next.js 16, React 19, TypeScript, Tailwind CSS 4, GSAP + ScrollTrigger, Motion e Lucide.
 
-Cada projeto terá identidade própria. Animações e efeitos visuais devem agregar à experiência sem comprometer acessibilidade, velocidade ou navegação.
+## Executar localmente
+
+Cada pasta é uma aplicação independente:
+
+\`\`\`bash
+cd apps/aesthetic-studio
+npm install
+npm run dev
+\`\`\`
+
+Para a segunda aplicação, use \`apps/dental-atelier\`.
+
+## Personalização antes de publicar
+
+Os nomes, textos, imagens, horários, endereço, redes sociais e contatos usados aqui são conteúdo demonstrativo. Atualize-os com os dados reais do cliente. Substitua o número de WhatsApp de exemplo, valide as imagens/licenças e configure domínio e metadados antes da publicação.
+
+Os serviços odontológicos devem ser revisados pelo responsável técnico e adequados às normas vigentes do conselho profissional. Não foram incluídos preços, promessas de resultado ou depoimentos fictícios.
+
+## Princípios de implementação
+
+- Identidades visuais diferentes, não apenas variações de cor.
+- Seções e conteúdo fáceis de localizar e adaptar.
+- Responsividade, navegação por teclado e suporte a preferência por movimento reduzido.
+- Animações com GSAP/ScrollTrigger e microinterações com Motion, sem depender delas para acessar conteúdo.
+- Chamadas para ação destacadas e pontos de contato configuráveis.
+- Imagens remotas de demonstração que devem ser substituídas por ativos autorizados do cliente.
