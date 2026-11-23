@@ -124,3 +124,33 @@ html{scroll-padding-top:90px}
   html{scroll-padding-top:68px}
   #essencia,#tratamentos,#espaco,#contato{scroll-margin-top:68px}
 }
+
+
+/* Mobile QA pass: stable sizing, comfortable touch targets and safe text wrapping. */
+html,body{max-width:100%;overflow-x:clip}
+button,a{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+@media(max-width:800px){
+  .nav{gap:12px}
+  .nav-links a{display:flex;align-items:center;min-height:44px}
+  .menu-toggle{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px}
+  .hero-content,.intro-main,.intro-aside,.section-head,.service-card>div,.editorial-copy,.contact-copy{min-width:0}
+  .service-card h3,.service-card p,.intro h2,.section-head h2,.editorial h2,.contact h2{overflow-wrap:anywhere}
+  .button{max-width:100%;text-align:center;line-height:1.5}
+}
+@media(max-width:380px){
+  .brand{max-width:calc(100% - 60px)}
+  .brand>span:last-child{min-width:0;line-height:1.35}
+  .hero-content{padding-left:6vw;padding-right:6vw}
+  .hero h1{font-size:clamp(43px,12vw,48px)}
+  .hero-copy{max-width:100%}
+  .scroll-cue{font-size:6px;letter-spacing:.13em}
+  .service-card>div{grid-template-columns:minmax(0,1fr) 38px;column-gap:8px}
+  .service-card h3{font-size:23px}
+  .contact-meta{flex-direction:column;gap:10px}
+  .contact-meta span+span{padding-left:0;border-left:0}
+}
+@media(hover:none){
+  .nav-links a::after{display:none}
+  .service-card a{min-width:44px;min-height:44px;width:44px;height:44px}
+}
