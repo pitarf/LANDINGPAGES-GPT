@@ -44,3 +44,6 @@ button,a{-webkit-tap-highlight-color:transparent}
  .d-contact-meta{flex-direction:column;gap:10px}
 }
 @media(hover:none){.d-links a,.d-link{min-height:44px}.d-links a::after{display:none}}
+
+/* Keep collapsed accordion regions out of the visual and accessibility flow. */
+.d-treatment-body[hidden]{display:none}
