@@ -13,10 +13,48 @@ const images={hero:"https://images.unsplash.com/photo-1606811971618-4486d14f3f99
 export default function Home(){
  const root=useRef<HTMLElement>(null);const [open,setOpen]=useState<number|null>(0);const [menu,setMenu]=useState(false);
  useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if(event.key==="Escape")setMenu(false)};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
- useEffect(()=>{let revert=()=>{};let cancelled=false;import("gsap").then(({gsap})=>import("gsap/ScrollTrigger").then(({ScrollTrigger})=>{gsap.registerPlugin(ScrollTrigger);const ctx=gsap.context(()=>{gsap.fromTo(".rise",{y:42,opacity:0},{y:0,opacity:1,duration:.9,stagger:.1,ease:"power3.out",scrollTrigger:{trigger:".approach",start:"top 78%"}});gsap.to(".dental-hero-photo",{yPercent:10,ease:"none",scrollTrigger:{trigger:".dental-hero",start:"top top",end:"bottom top",scrub:true}})},root);if(cancelled)ctx.revert();else revert=()=>ctx.revert()}));return()=>{cancelled=true;revert()}},[]);
+ useEffect(()=>{
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  let cleanup=()=>{};
+  let cancelled=false;
+  const setupAnimations=async()=>{
+   try{
+    const [{gsap},{ScrollTrigger}]=await Promise.all([import("gsap"),import("gsap/ScrollTrigger")]);
+    if(cancelled)return;
+    gsap.registerPlugin(ScrollTrigger);
+    const context=gsap.context(()=>{
+     gsap.utils.toArray<HTMLElement>(".rise").forEach((element)=>{
+      gsap.fromTo(element,{y:34,autoAlpha:0},{y:0,autoAlpha:1,duration:.85,ease:"power3.out",scrollTrigger:{trigger:element,start:"top 88%",once:true}});
+     });
+     gsap.to(".dental-hero-photo",{yPercent:10,ease:"none",scrollTrigger:{trigger:".dental-hero",start:"top top",end:"bottom top",scrub:true}});
+     const hero=root.current?.querySelector<HTMLElement>(".dental-hero");
+     const heroPhoto=hero?.querySelector<HTMLElement>(".dental-hero-photo");
+     const canTrackPointer=window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+     if(hero&&heroPhoto&&canTrackPointer){
+      const moveX=gsap.quickTo(heroPhoto,"x",{duration:.7,ease:"power3.out"});
+      const moveY=gsap.quickTo(heroPhoto,"y",{duration:.7,ease:"power3.out"});
+      const handlePointerMove=(event:PointerEvent)=>{
+       const bounds=hero.getBoundingClientRect();
+       const offsetX=(event.clientX-bounds.left)/bounds.width-.5;
+       const offsetY=(event.clientY-bounds.top)/bounds.height-.5;
+       moveX(offsetX*-12);moveY(offsetY*-9);
+      };
+      const resetPointer=()=>{moveX(0);moveY(0)};
+      hero.addEventListener("pointermove",handlePointerMove);
+      hero.addEventListener("pointerleave",resetPointer);
+      cleanup=()=>{hero.removeEventListener("pointermove",handlePointerMove);hero.removeEventListener("pointerleave",resetPointer);context.revert()};
+     }else cleanup=()=>context.revert();
+    },root.current??undefined);
+    ScrollTrigger.refresh();
+    if(cancelled)cleanup();
+   }catch(error){console.error("Não foi possível iniciar as animações da página.",error)}
+  };
+  void setupAnimations();
+  return()=>{cancelled=true;cleanup()};
+ },[]);
  return <main ref={root}>
  <a className="skip-link" href="#filosofia">Pular para o conteúdo</a>
- <header className="d-nav"><a className="d-brand" href="#"><span className="d-symbol">A</span><span>{site.name}<small>{site.descriptor}</small></span></a><nav id="dental-navigation" className={menu?"d-links active":"d-links"}><a href="#filosofia" onClick={()=>setMenu(false)}>Filosofia</a><a href="#especialidades" onClick={()=>setMenu(false)}>Especialidades</a><a href="#equipe" onClick={()=>setMenu(false)}>Nosso espaço</a><a href="#contato" onClick={()=>setMenu(false)}>Contato</a></nav><a className="d-nav-cta" href="#contato">Agende sua avaliação <ArrowUpRight size={15}/></a><button className="d-menu" aria-label={menu ? "Fechar menu" : "Abrir menu"} aria-expanded={menu} aria-controls="dental-navigation" onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button></header>
+ <header className="d-nav"><a className="d-brand" href="#"><span className="d-symbol">A</span><span>{site.name}<small>{site.descriptor}</small></span></a><nav aria-label="Navegação principal" id="dental-navigation" className={menu?"d-links active":"d-links"}><a href="#filosofia" onClick={()=>setMenu(false)}>Filosofia</a><a href="#especialidades" onClick={()=>setMenu(false)}>Especialidades</a><a href="#equipe" onClick={()=>setMenu(false)}>Nosso espaço</a><a href="#contato" onClick={()=>setMenu(false)}>Contato</a></nav><a className="d-nav-cta" href="#contato">Agende sua avaliação <ArrowUpRight size={15}/></a><button type="button" className="d-menu" aria-label={menu ? "Fechar menu" : "Abrir menu"} aria-expanded={menu} aria-controls="dental-navigation" onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button></header>
  <section className="dental-hero"><div className="dental-hero-photo" style={{backgroundImage:"linear-gradient(90deg,rgba(17,39,48,.72),rgba(17,39,48,.08)),url("+images.hero+")"}}/><div className="d-hero-copy"><motion.p className="d-eyebrow" initial={{opacity:0}} animate={{opacity:1}}>ODONTOLOGIA COM OUTRO OLHAR</motion.p><motion.h1 initial={{opacity:0,y:25}} animate={{opacity:1,y:0}} transition={{delay:.2}}>Seu sorriso<br/>merece <i>cuidado.</i></motion.h1><motion.p className="d-hero-desc" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.5}}>Um encontro entre ciência, sensibilidade e precisão. Para cuidar da sua saúde com a atenção que você merece.</motion.p><motion.a href="#contato" className="d-button" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7}}>Agende sua avaliação <ArrowUpRight size={16}/></motion.a></div><div className="d-hero-index">01 — 04 <span/> ODONTOLOGIA CONTEMPORÂNEA</div><a className="d-scroll" href="#filosofia"><ArrowDown size={15}/> DESCUBRA O ATELIER</a></section>
  <section className="d-intro" id="filosofia"><div className="d-intro-label rise">NOSSA FILOSOFIA <span>01 / 04</span></div><div className="d-intro-title rise"><p className="d-eyebrow dark">MAIS DO QUE UM SORRISO</p><h2>Cuidar da saúde também é <i>cuidar de você.</i></h2></div><div className="d-intro-text rise"><p>Acreditamos em uma odontologia que começa pela escuta. Cada pessoa chega com uma história, uma expectativa e necessidades únicas. Nosso papel é oferecer clareza, segurança e um plano de cuidado construído em conjunto.</p><a href="#equipe" className="d-link">Conheça nosso jeito de cuidar <ArrowRight size={16}/></a></div></section>
  <section className="d-approach approach" id="especialidades"><div className="d-section-title rise"><div><p className="d-eyebrow dark">CUIDADO INTEGRADO</p><h2>Especialidades que<br/><i>se conectam.</i></h2></div><p>Um olhar completo para a sua saúde bucal, com planejamento individual em cada etapa.</p></div><div className="d-treatment-list">{treatments.map((t,i)=><article className={open===i?"d-treatment expanded":"d-treatment"} key={t.id}><button onClick={()=>setOpen(open===i?null:i)} aria-expanded={open===i}><span className="d-treatment-id">{t.id}</span><span className="d-treatment-name">{t.name}</span><span className="d-treatment-detail">{t.detail}</span><span className="d-plus">{open===i?<X size={18}/>:<Plus size={18}/>}</span></button>{open===i&&<div className="d-treatment-body"><p>{t.text}</p><a href="#contato">Converse com nossa equipe <ArrowUpRight size={14}/></a></div>}</article>)}</div></section>
