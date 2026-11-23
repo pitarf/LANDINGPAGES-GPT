@@ -19,21 +19,20 @@ export default function Home() {
   const root = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
-    let ctx: ReturnType<typeof import("gsap").gsap.context>;
-    let gsapInstance: typeof import("gsap").gsap;
     let cleanup = () => {};
+    let cancelled = false;
     import("gsap").then(({ gsap }) => {
       import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
         gsap.registerPlugin(ScrollTrigger);
-        gsapInstance = gsap;
-        ctx = gsap.context(() => {
+        const ctx = gsap.context(() => {
           gsap.fromTo(".reveal", { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: 1, stagger: .12, ease: "power3.out", scrollTrigger: { trigger: ".reveal-zone", start: "top 82%" } });
           gsap.to(".hero-image", { yPercent: 12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
         }, root);
-        cleanup = () => ctx?.revert();
+        if (cancelled) ctx.revert();
+        else cleanup = () => ctx.revert();
       });
     });
-    return () => cleanup();
+    return () => { cancelled = true; cleanup(); };
   }, []);
   return <main ref={root}>
     <header className="nav"><a className="brand" href="#"><span className="brand-mark">m.</span><span>MAISON AURA<small>ESTÉTICA & BEM-ESTAR</small></span></a><nav className={menuOpen ? "nav-links open" : "nav-links"}><a href="#essencia" onClick={()=>setMenuOpen(false)}>A essência</a><a href="#tratamentos" onClick={()=>setMenuOpen(false)}>Tratamentos</a><a href="#espaco" onClick={()=>setMenuOpen(false)}>O espaço</a><a href="#contato" onClick={()=>setMenuOpen(false)}>Contato</a></nav><a className="nav-cta" href="#contato">Agendar consulta <ArrowUpRight size={15}/></a><button className="menu-toggle" aria-label="Abrir menu" onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X/>:<Menu/>}</button></header>
