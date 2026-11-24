@@ -154,3 +154,10 @@ button{cursor:pointer}
   .nav-links a::after{display:none}
   .service-card a{min-width:44px;min-height:44px;width:44px;height:44px}
 }
+
+/* Floating WhatsApp action, rendered only when a verified number is configured. */
+.floating-whatsapp{position:fixed;z-index:30;right:26px;bottom:24px;display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:0 20px;border-radius:999px;background:#247b55;color:#fff;box-shadow:0 10px 30px rgba(18,54,38,.24);font-size:11px;font-weight:600;letter-spacing:.04em;text-decoration:none;transition:transform .22s ease,box-shadow .22s ease}
+.floating-whatsapp:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(18,54,38,.3)}
+.floating-whatsapp:focus-visible{outline:3px solid #183d2d;outline-offset:4px}
+@media(max-width:600px){.floating-whatsapp{right:16px;bottom:16px;min-height:52px;padding:0 17px}}
+@media(prefers-reduced-motion:reduce){.floating-whatsapp{transition:none}}
