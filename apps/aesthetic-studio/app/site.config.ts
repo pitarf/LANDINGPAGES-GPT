@@ -11,6 +11,7 @@ export const site = {
   since: "MODELO DEMONSTRATIVO",
   hours: "",
   address: "",
+  mapsUrl: "",
   phone: "",
   email: "",
   whatsappUrl: whatsappNumber ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}` : "#contato",
