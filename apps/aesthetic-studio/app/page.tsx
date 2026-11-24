@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
-import { ArrowDown, ArrowRight, ArrowUpRight, Instagram, Menu, Sparkles, X } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Instagram, Menu, MessageCircle, Sparkles, X } from "lucide-react";
 import { useState } from "react";
 import { site } from "./site.config";
 
