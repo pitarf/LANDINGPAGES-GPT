@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { ArrowDown, ArrowRight, ArrowUpRight, Instagram, Menu, X, Plus } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Instagram, Menu, MessageCircle, X, Plus } from "lucide-react";
 import { site } from "./site.config";
 const treatments = [
  {id:"01",name:"Clínica geral",text:"Prevenção e cuidado contínuo para a saúde do seu sorriso.",detail:"Consultas, limpeza e acompanhamento"},
