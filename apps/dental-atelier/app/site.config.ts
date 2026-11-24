@@ -10,6 +10,7 @@ export const site = {
   city: "",
   hours: "",
   address: "",
+  mapsUrl: "",
   phone: "",
   email: "",
   whatsappUrl: whatsappNumber ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}` : "#contato",
