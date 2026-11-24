@@ -1,6 +1,7 @@
 // Replace demo values with verified business information before publishing.
 const whatsappNumber = "";
 const whatsappMessage = "Olá! Gostaria de agendar uma avaliação.";
+const businessAddress = "";
 
 export const siteMetadata = { title: "Atelier Oral | Odontologia Integrada", description: "Modelo demonstrativo de clínica odontológica. Personalize os dados, equipe e credenciais antes de publicar." } as const;
 
@@ -9,8 +10,8 @@ export const site = {
   descriptor: "ODONTOLOGIA INTEGRADA",
   city: "",
   hours: "",
-  address: "",
-  mapsUrl: "",
+  address: businessAddress,
+  mapsUrl: businessAddress ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(businessAddress)}` : "",
   phone: "",
   email: "",
   whatsappUrl: whatsappNumber ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}` : "#contato",
