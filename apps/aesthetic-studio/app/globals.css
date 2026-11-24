@@ -161,3 +161,6 @@ button{cursor:pointer}
 .floating-whatsapp:focus-visible{outline:3px solid #183d2d;outline-offset:4px}
 @media(max-width:600px){.floating-whatsapp{right:16px;bottom:16px;min-height:52px;padding:0 17px}}
 @media(prefers-reduced-motion:reduce){.floating-whatsapp{transition:none}}
+
+/* Trust and patient journey section */
+.a-trust{padding:105px 12vw 100px;background:#e9e6dc}.a-trust-heading{max-width:650px}.a-trust-heading h2{font:400 clamp(38px,4.5vw,58px)/1.1 'Playfair Display';margin:20px 0}.a-trust-heading h2 em{color:#87947d}.a-trust-heading>p:last-child{max-width:510px;color:#73786e;font-size:12px;line-height:1.9}.a-trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}.a-trust-card{padding:26px 24px;border-top:1px solid var(--line);background:rgba(255,255,255,.25)}.a-trust-card>span{font:italic 14px 'Playfair Display';color:#92998a}.a-trust-card h3{font:400 24px 'Playfair Display';margin:18px 0 10px}.a-trust-card p,.a-demo-note{font-size:11px;line-height:1.85;color:#73786e}.a-demo-note{margin:28px 0 0;font-size:10px}@media(max-width:800px){.a-trust{padding:78px 8vw}.a-trust-grid{grid-template-columns:1fr;gap:12px;margin-top:30px}.a-trust-card{padding:22px 20px}}@media(max-width:600px){.a-trust{padding:70px 7vw}.a-trust-heading h2{font-size:clamp(35px,9vw,44px)}}
