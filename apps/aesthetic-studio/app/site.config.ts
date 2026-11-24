@@ -1,6 +1,7 @@
 // Replace demo values with verified business information before publishing.
 const whatsappNumber = "";
 const whatsappMessage = "Olá! Gostaria de agendar uma avaliação.";
+const businessAddress = "";
 
 export const siteMetadata = { title: "Maison Aura | Estética & Bem-estar", description: "Modelo demonstrativo de clínica de estética. Personalize os dados e valide os serviços antes de publicar." } as const;
 
@@ -10,8 +11,8 @@ export const site = {
   city: "",
   since: "MODELO DEMONSTRATIVO",
   hours: "",
-  address: "",
-  mapsUrl: "",
+  address: businessAddress,
+  mapsUrl: businessAddress ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(businessAddress)}` : "",
   phone: "",
   email: "",
   whatsappUrl: whatsappNumber ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}` : "#contato",
